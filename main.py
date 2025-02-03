@@ -1,41 +1,52 @@
- 
-
+from dotenv import load_dotenv
 import mysql.connector
 from log import Log
+import os
 
-db = mysql.connector.connect(host="187.188.251.231", user="cron", passwd="1234", db="asterisk", port="3308")
+# Load .env variables
+load_dotenv()
+
+# Variables
+host = os.getenv('host')
+user = os.getenv('user')
+passwd = os.getenv('passwd')
+db = os.getenv('db')
+port = os.getenv('port')
+
+db = mysql.connector.connect(host=host, user=user, passwd=passwd, db=db, port=port)
 
 cursor = db.cursor()
 
 query = """
     SELECT vc.dialable_leads 
     FROM vicidial_campaign_stats vc
-    WHERE vc.campaign_id = '7777'
+    WHERE vc.campaign_id = 'C1'
 """
 cursor.execute(query)
 rows = cursor.fetchall()
 
 dialable_leads = rows[0][0]
 
-# if dialable_leads < 1000:
-if True:
-    Log("/var/log/reseteo-listas/log", "Menos de 1k de registros, reseteando (" + str(dialable_leads) + "): ")
+if dialable_leads < 1000:
+    Log("/var/log/reseteo-listas-vicidial/log", "Menos de 1k de registros, reseteando (" + str(dialable_leads) + "): ")
 
+    # Update resets_today
     query = """
         UPDATE vicidial_lists S
         SET resets_today=(resets_today + 1)
         WHERE
-            S.campaign_id='7777'
+            S.campaign_id='C1'
             AND S.active = 'Y'
     """
 
+    # Update called_since_last_reset
     cursor.execute(query)
     query = """
         UPDATE vicidial_list L 
         JOIN vicidial_lists S on S.list_id=L.list_id
         SET called_since_last_reset = 'N'
         WHERE
-            S.campaign_id='7777'
+            S.campaign_id='C1'
             AND S.active = 'Y'
             AND called_since_last_reset = 'Y'
     """
