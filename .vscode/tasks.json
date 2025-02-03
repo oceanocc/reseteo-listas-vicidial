@@ -1,0 +1,10 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Upload",
+            "type": "shell",
+            "command": "rsync -Pav --exclude '__pycache__' --exclude '.vscode/' --exclude '.gitignore' -e \"ssh -i $HOME/Projects/Negocios/contacta-digital/extra/claves-ssh/contacta-EC2WEB01.pem\" ./* ubuntu@3.208.184.234:/home/ubuntu/projects/reseteo-listas/"
+        }
+    ]
+}
