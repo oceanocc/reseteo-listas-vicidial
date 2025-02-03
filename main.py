@@ -14,8 +14,6 @@ passwd = os.getenv('passwd')
 db = os.getenv('db')
 port = os.getenv('port')
 
-print(passwd)
-
 db = mysql.connector.connect(host=host, user=user, passwd=passwd, db=db, port=port)
 
 cursor = db.cursor()
