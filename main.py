@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 import mysql.connector
 from log import Log
 import os
+import datetime
 
 # Load .env variables
 load_dotenv()
@@ -28,7 +29,7 @@ rows = cursor.fetchall()
 dialable_leads = rows[0][0]
 
 if dialable_leads < 1000:
-    Log("/var/log/reseteo-listas-vicidial/log", "Menos de 1k de registros, reseteando (" + str(dialable_leads) + "): ")
+    Log("/var/log/reseteo-listas-vicidial/log", "Menos de 1k de registros, reseteando C1 (" + str(dialable_leads) + "): ")
 
     # Update resets_today
     query = """
@@ -51,3 +52,7 @@ if dialable_leads < 1000:
             AND called_since_last_reset = 'Y'
     """
     cursor.execute(query)
+else:
+    now = datetime.datetime.now()
+    datetime_str = now.strftime("%Y-%m-%d %H:%M:%S")
+    print("[" + datetime_str + "] " + str(dialable_leads) + " registros disponibles")
