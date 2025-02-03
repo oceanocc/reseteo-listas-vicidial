@@ -28,8 +28,8 @@ rows = cursor.fetchall()
 
 dialable_leads = rows[0][0]
 
-if dialable_leads < 1000:
-    Log("/var/log/reseteo-listas-vicidial/log", "Menos de 1k de registros, reseteando C1 (" + str(dialable_leads) + "): ")
+if dialable_leads < 100:
+    Log("/var/log/reseteo-listas-vicidial/log", "Menos de 100 de registros, reseteando C1 (" + str(dialable_leads) + "): ")
 
     # Update resets_today
     query = """
