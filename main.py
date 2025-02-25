@@ -24,11 +24,16 @@ for campaign in campaigns:
     query = f"""
         SELECT vc.dialable_leads 
         FROM vicidial_campaign_stats vc
-        WHERE vc.campaign_id = '{campaign}'
+        JOIN vicidial_campaigns vc2 ON vc2.campaign_id = vc.campaign_id
+        WHERE vc.campaign_id = '{campaign}' AND active = 'Y'
     """
     cursor.execute(query)
     rows = cursor.fetchall()
 
+    if len(rows) == 0:
+        print(f"{campaign} inactiva")
+        continue;
+    
     dialable_leads = rows[0][0]
 
     if dialable_leads < 100:
