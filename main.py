@@ -36,7 +36,7 @@ for campaign in campaigns:
     
     dialable_leads = rows[0][0]
 
-    if dialable_leads < 100:
+    if dialable_leads < 200:
         Log("/var/log/reseteo-listas-vicidial/log", f"Menos de 100 de registros, reseteando {campaign} (" + str(dialable_leads) + "): ")
 
         # Update resets_today
