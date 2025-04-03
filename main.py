@@ -13,6 +13,7 @@ user = os.getenv('user')
 passwd = os.getenv('passwd')
 db = os.getenv('db')
 port = os.getenv('port')
+limit_records = os.getenv('limit_records')
 
 db = mysql.connector.connect(host=host, user=user, passwd=passwd, db=db, port=port)
 cursor = db.cursor()
@@ -36,8 +37,8 @@ for campaign in campaigns:
     
     dialable_leads = rows[0][0]
 
-    if dialable_leads < 200:
-        Log("/var/log/reseteo-listas-vicidial/log", f"Menos de 200 de registros, reseteando {campaign} (" + str(dialable_leads) + "): ")
+    if dialable_leads < limit_records:
+        Log("/var/log/reseteo-listas-vicidial/log", f"Menos de {limit_records} de registros, reseteando {campaign} (" + str(dialable_leads) + "): ")
 
         # Update resets_today
         query = f"""
