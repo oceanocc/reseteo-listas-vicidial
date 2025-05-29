@@ -18,7 +18,7 @@ limit_records = os.getenv('limit_records')
 db = mysql.connector.connect(host=host, user=user, passwd=passwd, db=db, port=port)
 cursor = db.cursor()
 
-campaigns = ['A1', 'A2', 'A4']
+campaigns = ['A1', 'A2', 'A4', 'B1']
 
 for campaign in campaigns:
 
