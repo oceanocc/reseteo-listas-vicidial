@@ -64,4 +64,4 @@ for campaign in campaigns:
     else:
         now = datetime.datetime.now()
         datetime_str = now.strftime("%Y-%m-%d %H:%M:%S")
-        print("[" + datetime_str + "] " + str(dialable_leads) + " registros disponibles")
+        print("[" + datetime_str + "] " + campaign + " " + str(dialable_leads) + " registros disponibles")
